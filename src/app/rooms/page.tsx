@@ -1,10 +1,22 @@
-import React from "react";
+import Filter from "@/components/Filter";
+import RoomList from "@/components/RoomList";
+import Spinner from "@/components/Spinner";
+import React, { Suspense } from "react";
+
+interface Props {
+  searchParams: { capacity: string };
+}
 
 export const metadata = {
   title: "rooms",
 };
 
-export default async function page() {
+export const revalidate = 10;
+
+export default async function page({ searchParams }: Props) {
+  const filteredValue = searchParams?.capacity ?? "all";
+
+  console.log("filteredValue" + filteredValue);
   return (
     <div>
       <h1 className="text-4xl mb-5 text-teal-300 font-medium">
@@ -18,6 +30,12 @@ export default async function page() {
         away from home. The perfect spot for a peaceful, calm vacation. Welcome
         to paradise.
       </p>
+
+      <Filter />
+
+      <Suspense fallback={<Spinner />}>
+        <RoomList filteredValue={filteredValue} />
+      </Suspense>
     </div>
   );
 }
