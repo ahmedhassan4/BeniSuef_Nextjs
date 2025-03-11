@@ -4,7 +4,7 @@ import Spinner from "@/components/Spinner";
 import React, { Suspense } from "react";
 
 interface Props {
-  searchParams: { capacity: string };
+  searchParams: Promise<{ capacity?: string }>;
 }
 
 export const metadata = {
@@ -14,9 +14,9 @@ export const metadata = {
 export const revalidate = 10;
 
 export default async function page({ searchParams }: Props) {
-  const filteredValue = searchParams?.capacity ?? "all";
+  const params = await searchParams;
+  const filteredValue = params?.capacity ?? "all";
 
-  console.log("filteredValue" + filteredValue);
   return (
     <div>
       <h1 className="text-4xl mb-5 text-teal-300 font-medium">

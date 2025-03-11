@@ -9,7 +9,6 @@ export const metadata = {
 };
 
 const josefin = Josefin_Sans({ subsets: ["latin"], weight: "400" });
-console.log(josefin);
 
 export default function RootLayout({
   children,

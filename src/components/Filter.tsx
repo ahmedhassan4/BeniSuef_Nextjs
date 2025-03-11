@@ -4,17 +4,14 @@ import React from "react";
 
 export default function Filter() {
   const searchParams = useSearchParams();
-  console.log("searchParams " + searchParams);
 
   const router = useRouter();
   const pathname = usePathname();
 
   function handleFilter(filter: string) {
-    console.log("filter " + filter);
     const params = new URLSearchParams(searchParams);
     params.set("capacity", filter);
     router.replace(`${pathname}?${params.toString()}`);
-    console.log(filter);
   }
 
   return (

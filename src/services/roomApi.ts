@@ -8,7 +8,6 @@ export const getrooms = async function () {
     .order("name");
 
   if (error) {
-    console.error(error);
     throw new Error("rooms could not be loaded");
   }
 

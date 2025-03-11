@@ -27,12 +27,10 @@ export default async function RoomList({ filteredValue }: Props) {
   if (filteredValue === "large") {
     filteredRooms = rooms.filter((room) => room.maxCapacity > 4);
   }
-
-  console.log(filteredRooms);
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14 mt-5">
       {filteredRooms.map((rooms: RoomType) => (
-        <RoomCard key={rooms.id} rooms={rooms} />
+        <RoomCard key={rooms.id} room={rooms} />
       ))}
     </div>
   );
