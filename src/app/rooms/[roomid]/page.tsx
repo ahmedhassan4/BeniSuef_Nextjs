@@ -1,3 +1,5 @@
+import Reservation from "@/components/Reservation";
+import TextExpander from "@/components/TextExpander";
 import { getRoom } from "@/services/roomApi";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -19,8 +21,7 @@ export default async function page({ params }: Props) {
   const { roomid } = await params;
   const room = await getRoom(Number(roomid));
 
-  const { id, name, maxCapacity, regularPrice, discount, image, description } =
-    room;
+  const { name, maxCapacity, image, description } = room;
   return (
     <div className="max-w-6xl mx-auto mt-8">
       <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
@@ -38,7 +39,9 @@ export default async function page({ params }: Props) {
             Cabin {name}
           </h3>
 
-          <p className="text-lg text-primary-300 mb-10">{description}</p>
+          <p className="text-lg text-primary-300 mb-10">
+            <TextExpander>{description}</TextExpander>
+          </p>
 
           <ul className="flex flex-col gap-4 mb-7">
             <li className="flex gap-3 items-center">
@@ -70,6 +73,7 @@ export default async function page({ params }: Props) {
           Reserve today. Pay on arrival.
         </h2>
       </div>
+      <Reservation room={room} />
     </div>
   );
 }

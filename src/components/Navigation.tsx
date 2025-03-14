@@ -1,7 +1,7 @@
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { auth } from "@/services/auth";
 import React from "react";
+import NavLink from "./NavLink";
+import Image from "next/image";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -10,23 +10,31 @@ const navItems = [
   { name: "About", path: "/about" },
 ];
 
-export default function Navigation() {
-  const pathname = usePathname();
+export default async function Navigation() {
+  const nav = [...navItems];
+  const session = await auth();
+  if (session?.user) nav.push({ name: "logout", path: "/logout" });
+  if (!session?.user) nav.push({ name: "login", path: "/login" });
+  console.log(session);
   return (
     <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
-        {navItems.map(({ name, path }) => (
+        {nav.map(({ name, path }) => (
           <li key={name}>
-            <Link
-              href={path}
-              className={
-                pathname === path ? "text-yellow-500" : "hover:text-amber-400 "
-              }
-            >
-              {name}
-            </Link>
+            <NavLink name={name} path={path} />
           </li>
         ))}
+        {session?.user && (
+          <li>
+            <Image
+              src={session?.user?.image}
+              alt="logo"
+              width={50}
+              height={50}
+              className="rounded-full"
+            />
+          </li>
+        )}
       </ul>
     </nav>
   );
